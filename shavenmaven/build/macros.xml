@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <macrodef name="embed.libs">
+        <sequential>
+            <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask"
+                     classpathref="all.dependancies"/>
+
+            <move file="${release.jar.path}" tofile="${release.dep.path}"/>
+
+            <jarjar jarfile="${release.jar.path}" manifest="${release.jar.path}.mf">
+                <zipfileset src="${release.dep.path}"/>
+                <zipgroupfileset dir="${build.dependencies.dir}" includes="totallylazy-*.jar, utterlyidle-*.jar" excludes="*-sources.jar, shavenmaven.jar"/>
+                <rule pattern="com.googlecode.totallylazy.*" result="com.googlecode.shavenmaven.internal.totallylazy.$@1"/>
+                <rule pattern="com.googlecode.totallylazy.**.*" result="com.googlecode.shavenmaven.internal.totallylazy.@1.$@2"/>
+                <rule pattern="com.googlecode.utterlyidle.*" result="com.googlecode.shavenmaven.internal.utterlyidle.$@1"/>
+                <rule pattern="com.googlecode.utterlyidle.**.*" result="com.googlecode.shavenmaven.internal.utterlyidle.@1.$@2"/>
+            </jarjar>
+
+        </sequential>
+    </macrodef>
+
+    <macrodef name="compile.and.jar">
+        <attribute name="src"/>
+        <attribute name="jar"/>
+        <attribute name="classpathref"/>
+        <attribute name="version"/>
+        <attribute name="classes" default="@{jar}.classes"/>
+        <attribute name="main.class" default=""/>
+        <attribute name="manifest" default="@{jar}.mf"/>
+
+
+        <sequential>
+            <mkdir dir="@{classes}"/>
+            <javac srcdir="@{src}" destdir="@{classes}" classpathref="@{classpathref}"
+                   bootclasspath="${java.home}/lib/rt.jar:${java.home}/lib/jce.jar" target="1.6" source="1.6" debug="true"
+                   includeantruntime="false">
+                <compilerarg value="-Xlint:unchecked"/>
+                <compilerarg value="-Werror"/>
+            </javac>
+            <copy todir="@{classes}">
+                <fileset dir="@{src}">
+                    <exclude name="**/*.java"/>
+                </fileset>
+            </copy>
+
+            <manifest file="@{manifest}">
+                <attribute name="Main-Class" value="@{main.class}"/>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Specification-Title" value="${ant.project.name}"/>
+                <attribute name="Specification-Version" value="@{version}"/>
+                <attribute name="Specification-Vendor" value="${ant.project.name}"/>
+                <attribute name="Implementation-Title" value="${ant.project.name}"/>
+                <attribute name="Implementation-Version" value="@{version}"/>
+                <attribute name="Implementation-Vendor" value="${ant.project.name}"/>
+            </manifest>
+
+            <jar destfile="@{jar}" basedir="@{classes}" manifest="@{manifest}"/>
+
+            <delete dir="@{classes}"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="test">
+        <attribute name="jar"/>
+        <attribute name="reports"/>
+        <attribute name="classpathref"/>
+
+        <sequential>
+            <mkdir dir="@{reports}"/>
+            <property name="unzipped.jar" value="@{reports}.unzipped.jar"/>
+            <mkdir dir="${unzipped.jar}"/>
+            <unzip dest="${unzipped.jar}" src="@{jar}"/>
+            <junit printsummary="no" fork="on" failureproperty="failed" forkmode="once">
+                <sysproperty key="yatspec.output.dir" value="@{reports}"/>
+                <!--<jvmarg line="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"/>-->
+                <classpath refid="@{classpathref}"/>
+                <formatter type="xml"/>
+                <batchtest todir="@{reports}">
+                    <fileset dir="${unzipped.jar}">
+                        <include name="**/*Test.class"/>
+                        <exclude name="**/*$*"/>
+                    </fileset>
+                </batchtest>
+            </junit>
+
+            <delete dir="${unzipped.jar}"/>
+            <fail message="Tests failed" if="failed"/>
+        </sequential>
+    </macrodef>
+
+</project>

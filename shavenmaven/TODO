@@ -1,0 +1,6 @@
+TODO:
+Integrate shavenmaven with bake
+
+ * provide shavenmaven features directly in Javascript
+ * rewrite shavenmaven's build.xml as build.js
+ 
