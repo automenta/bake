@@ -10,4 +10,4 @@ BAKE_HOME=`dirname $BAKE_BIN_HOME`
 
 CLASSPATH=$BAKE_HOME/lib/ant.jar
 
-jrunscript -classpath $CLASSPATH $BAKE_HOME/js/bake.js $BAKE_HOME $*
+jrunscript -classpath $CLASSPATH $BAKE_HOME/bake.js $*

@@ -1,7 +1,8 @@
- Bake
- ====
+Bake
+====
 
-Bake is a Java based build tool that doesn't use XML.  Builds are described using the JDK's built in JavaScript engine (at the moment JDK 6 or higher is required).  Bake build scripts have access to all Ant tasks and all Java classes in the JDK.
+Bake is an adapter for the Apache 'ant' Java build tool which involves pure Javascript (already bundled with JDK6+).  There's no need for XML, a special scripting language, or DSL -- just some readable, declarative code in build.js.
+Bake build scripts have access to all Ant tasks and all Java classes in the JDK.
 
 This project has basic functionality working, but is still in proof of concept phase.  There are no tests around the code.  Windows environment is unsupported as yet.
 
@@ -46,25 +47,35 @@ project = {
 
  Getting Started
  ---------------
-- Download and unzip bake.zip where you want it installed
-- Either add the directory of the 'bake' script (which is in the 'bin' directory of the bake project) to your path, or make a symlink to the 'bake' script in a location already on your path
-- You may also have to make the 'bake' script executable (eg. 'cd $BAKE_HOME/bin && chmod +x bake')
+- git clone, or download and unzip bake.zip where you want it installed
+
+- You may have to make the 'bake' script executable (eg. 'cd $BAKE_HOME/bin && chmod +x bake')
+
 - Create a 'build.js' file in the root of your fancy new project
-- Create a 'project' variable inside the build.js file which is an object
-- Each attribute of the 'project' object will be taken as a build target
-- The following attributes are looked for on each target,
+
+  - Create a 'project' variable inside the build.js file which is an object
+
+  - Each attribute of the 'project' object will be taken as a build target
+
+  - The following attributes are looked for on each target,
     - 'description': Not required. Description of the target, this is displayed in the target list.
     - 'depends': Not required. Names other targets in order that need to be run before this one.
     - 'needed': Not required. Used to determine if the target actually needs to be executed. Is either a function that returns true of false, or an object with 'target' and 'source' attributes. In the case of the latter, bake will decide if the task needs to be run based on the modified times of the files or directories named with the 'target' and 'source' attributes.
     - 'build': Required. A function containing the steps to build the target.
 
 
- Built-ins
- ---------
+Built-ins
+---------
 The following utilities are available within your build script,
+
 - Any classes loaded by the JVM. For example you can create a Java File object with 'var file = new java.io.File(".");'.  For more info on this stuff, have a look at the "Java Scripting Programmer's Guide" on the Java site (at the time of writing, at http://java.sun.com/javase/6/docs/technotes/guides/scripting/programmer_guide/index.html) and Mozilla's Rhino documentation (https://developer.mozilla.org/en/Rhino_documentation).
+
 - Some nice utility functions which are included by 'jrunscript' including some very handy file system level commands like 'mkdirs()' and 'mv()'. These are also documented on the Java web site (at the time of writing, at http://java.sun.com/javase/7/docs/technotes/tools/share/jsdocs/index.html).
+
 - All Ant classes. The common packages are included in a variable called 'ant_imports'. These are 'org.apache.tools.ant', 'org.apache.tools.ant.types' and 'org.apache.tools.ant.taskdefs'. When using Ant tasks, take a look at the task descriptions in the Ant manual (http://ant.apache.org/manual/index.html) and what Java types are expected in the API (http://www.jajakarta.org/ant/ant-1.6.1/docs/en/manual/api/index.html).
+
 - Some helpers included with bake
     - 'ant_helper.call_task': Takes the task class at the first parameter. The second parameter is a list of attributes to set. An empty Ant 'Project' object is created in this method (this may need to change for complex builds).
+    
     - 'ant_helper.create_path': Makes it possible to create an Ant 'Path' object on one line
+    

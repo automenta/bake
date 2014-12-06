@@ -1,0 +1,29 @@
+<project default="now" basedir=".">
+
+    <condition property="params.set">
+        <isset property="O"/>
+    </condition>
+
+
+    <target name="now">
+        <fail unless="params.set">bake via ant:
+            Use:    ./bake
+ or:    ant now -DO="..."
+        </fail>
+        <exec executable="./bake">
+            <arg line="${O}"/>
+        </exec>
+    </target>
+
+    <target name="build">
+        <exec executable="./bake"><arg line="build"/></exec>
+    </target>    
+<!--
+  <target name="main">
+
+    <script language="javascript" src="bake.js"></script>
+
+  </target>
+  -->
+
+</project>
