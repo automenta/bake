@@ -15,10 +15,22 @@
         </exec>
     </target>
 
+    <!-- Stubs for common ant tasks -->
     <target name="build">
         <exec executable="./bake"><arg line="build"/></exec>
+    </target>
+    <target name="run">
+        <exec executable="./bake"><arg line="run"/></exec>
     </target>    
+    <target name="test">
+        <exec executable="./bake"><arg line="test"/></exec>
+    </target>    
+    
+    
+    
 <!--
+    Is it possible to executve the .js directly?
+    
   <target name="main">
 
     <script language="javascript" src="bake.js"></script>

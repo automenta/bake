@@ -1,10 +1,11 @@
+//This file is not meant to be called directly.  Use the 'bake' script.
 
 var bake_home = "."; //arguments[0];
 
 
 var prefix = "*** bake: ";
 
-///////
+
 ant_imports = new JavaImporter(
         org.apache.tools.ant,
         org.apache.tools.ant.types,
@@ -30,9 +31,6 @@ ant_helper = {
 };
 
 
-
-
-//////
 bake_helper = {
 
     print_targets: function() {

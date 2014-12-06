@@ -1,3 +1,5 @@
+//This is bake's own packaging build script which simply creates a .zip file of the project.
+
 version = "0.0.1";
 zip_file_name="bake_v" + version + ".zip";
 
@@ -15,6 +17,7 @@ project = {
 					includes: "bake/**",
 					excludes: "bake/.git/**"
 			});
+			println("(Re-)created: " + zip_file_name); 
 		}
 	}
 
