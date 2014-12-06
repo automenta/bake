@@ -8,8 +8,8 @@ Bake build scripts have access to all Ant tasks and all Java classes in the JDK.
 This project has basic functionality working, but is still in proof of concept phase.  There are no tests around the code.  Windows environment is unsupported as yet.
 
 
- Example
- -------
+Example
+-------
 
 The following is an example bake script (which can be found in the project at bake/examples/simple/build.js),
 
@@ -63,8 +63,9 @@ Stub which proxies to 'bake' allowing 'ant' to function somewhat.  Good for tric
 The Javascript 'ant' wrapper code.  Not for executing directly.
 
 
- Getting Started
- ---------------
+Getting Started
+---------------
+
 - git clone, or download and unzip bake.zip where you want it installed
 
 - You may have to make the 'bake' script executable (eg. 'cd $BAKE_HOME/bin && chmod +x bake')
@@ -82,8 +83,9 @@ The Javascript 'ant' wrapper code.  Not for executing directly.
     - 'build': Required. A function containing the steps to build the target.
 
 
-Built-ins
----------
+Built-in Features
+-----------
+
 The following utilities are available within your build script,
 
 - Any classes loaded by the JVM. For example you can create a Java File object with 'var file = new java.io.File(".");'.  For more info on this stuff, have a look at the "Java Scripting Programmer's Guide" on the Java site (at the time of writing, at http://java.sun.com/javase/6/docs/technotes/guides/scripting/programmer_guide/index.html) and Mozilla's Rhino documentation (https://developer.mozilla.org/en/Rhino_documentation).
