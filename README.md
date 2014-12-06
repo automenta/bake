@@ -1,3 +1,4 @@
+![base](https://raw.githubusercontent.com/automenta/bake/master/logo.jpg)
 Bake
 ====
 
@@ -12,6 +13,7 @@ This project has basic functionality working, but is still in proof of concept p
 
 The following is an example bake script (which can be found in the project at bake/examples/simple/build.js),
 
+```
 project = {
 
     compile: {
@@ -43,6 +45,22 @@ project = {
     }
 
 };
+```
+
+Important Files
+-----
+
+**build.js**
+Where a project is defined.  replaces what would ordinarily be in build.xml with task definitions in pure Javascript
+
+**bake**
+Call this executable SH script with an argument to execute a task, or no arguments to list those available.
+
+**build.xml**
+Stub which proxies to 'bake' allowing 'ant' to function somewhat.  Good for tricking an IDE into thinking it's an empty ANT project.
+
+**bake.js**
+The Javascript 'ant' wrapper code.  Not for executing directly.
 
 
  Getting Started
