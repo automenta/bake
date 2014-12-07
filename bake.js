@@ -68,7 +68,7 @@ bake = {
             task.build();
         }
         else {
-            println(prefix + task_name + "' not necessary");
+            println(prefix + "'" + task_name + "' not necessary");
         }
     },
     check_if_depends: function (task) {
