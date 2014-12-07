@@ -1,3 +1,4 @@
+#!/bin/sh
 THIS_SCRIPT=$_
 
 if [[ -L $THIS_SCRIPT ]]
@@ -8,6 +9,6 @@ fi
 BAKE_BIN_HOME=`dirname $THIS_SCRIPT`
 BAKE_HOME=`dirname $BAKE_BIN_HOME`
 
-CLASSPATH=$BAKE_HOME/lib/ant.jar
+CLASSPATH=$BAKE_HOME/build/ant.jar
 
 jrunscript -classpath $CLASSPATH $BAKE_HOME/bake.js $*
